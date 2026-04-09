@@ -1,0 +1,26 @@
+# --- PROJECT WIDE ---
+.DS_Store
+.env
+.vscode/
+
+# --- PYTHON / BACKEND ---
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.venv/
+backend/venv/
+backend/env/
+backend/sql_app.db
+backend/.pytest_cache/
+
+# --- REACT / FRONTEND ---
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
