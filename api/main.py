@@ -5,6 +5,7 @@ import httpx
 import time
 import api.models as models  # Updated import path for Vercel
 import api.database as database 
+from pydantic import BaseModel
 
 # Create tables if they don't exist (Note: SQLite is ephemeral on Vercel)
 models.Base.metadata.create_all(bind=database.engine)
@@ -25,14 +26,17 @@ def get_db():
     finally:
         db.close()
 
+class TestRequest(BaseModel):
+    url: str
+    method: str = "GET"
+    threshold: float = 500.0
+
 # CHANGED TO GET: To match your frontend's request style shown in the screenshot
-@app.get("/api/run-test")
-async def run_api_test(
-    url: str = Query(...), 
-    method: str = "GET", 
-    threshold: float = 500.0, 
-    db: Session = Depends(get_db)
-):
+@app.post("/api/run-test")
+async def run_api_test(request: TestRequest, db: Session = Depends(get_db)):
+    url = request.url
+    method = request.method
+    threshold = request.threshold
     start_time = time.perf_counter()
     
     try:

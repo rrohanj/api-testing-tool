@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 import './App.css';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = window.location.origin + '/api';
 
 function App() {
   const [view, setView] = useState('landing');
@@ -136,9 +136,11 @@ function App() {
 
   const triggerTest = async () => {
     try {
-      await axios.post(
-        `${API_BASE_URL}/run-test?url=${url}&method=${method}&threshold=${threshold}`,
-      );
+      await axios.post(`${API_BASE_URL}/run-test`, {
+        url: url,
+        method: method,
+        threshold: threshold,
+      });
       fetchHistory();
     } catch (err) {
       console.error('Polling failed');
